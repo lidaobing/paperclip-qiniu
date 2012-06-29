@@ -14,4 +14,5 @@ Gem::Specification.new do |gem|
   gem.name          = "paperclip-qiniu"
   gem.require_paths = ["lib"]
   gem.version       = Paperclip::Qiniu::VERSION
+  gem.add_dependency 'paperclip'
 end
