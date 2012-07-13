@@ -100,15 +100,10 @@ module Paperclip
       end
 
       def public_url(style = default_style)
-        if @options[:fog_host]
-          "#{dynamic_fog_host_for_style(style)}/#{path(style)}"
-        else
-          if fog_credentials[:provider] == 'AWS'
-            "https://#{host_name_for_directory}/#{path(style)}"
-          else
-            directory.files.new(:key => path(style)).public_url
-          end
-        end
+        init
+        res = ::Qiniu::RS.get(bucket, path(style))
+        return res["url"] if res
+        nil
       end
 
       def expiring_url(time = 3600, style = default_style)
