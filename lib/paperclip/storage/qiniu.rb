@@ -54,11 +54,8 @@ module Paperclip
       AWS_BUCKET_SUBDOMAIN_RESTRICTON_REGEX = /^(?:[a-z]|\d(?!\d{0,2}(?:\.\d{1,3}){3}$))(?:[a-z0-9]|\.(?![\.\-])|\-(?![\.])){1,61}[a-z0-9]$/
 
       def exists?(style = default_style)
-        if original_filename
-          !!directory.files.head(path(style))
-        else
-          false
-        end
+        init
+        !!::Qiniu::RS.stat(bucket, path(style))
       end
 
       def fog_credentials
@@ -92,9 +89,9 @@ module Paperclip
       end
 
       def flush_deletes
+        init
         for path in @queued_for_delete do
-          log("deleting #{path}")
-          directory.files.new(:key => path).destroy
+          ::Qiniu::RS.delete(bucket, path)
         end
         @queued_for_delete = []
       end
