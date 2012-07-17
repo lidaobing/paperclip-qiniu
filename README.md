@@ -55,3 +55,14 @@ end
 3. Commit your changes (`git commit -am 'Added some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+## CHANGELOG
+
+### 0.0.2 (2012-07-17)
+
+* support public host.
+
+### 0.0.1
+
+* it works.
+
