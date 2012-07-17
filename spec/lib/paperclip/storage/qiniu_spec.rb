@@ -3,8 +3,8 @@ require 'paperclip/storage/qiniu'
 
 module Paperclip::Storage
   describe Qiniu do
-    it "should works" do
-      1.should == 1
+    context 'exists?' do
+      pending "it's hard to test paperclip plugin"
     end
   end
 end

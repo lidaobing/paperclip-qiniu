@@ -46,16 +46,23 @@ module Paperclip
       def flush_deletes
         init
         for path in @queued_for_delete do
-          ::Qiniu::RS.delete(bucket, path)
+          ::Qiniu::RS.delete(bucket, fix_path(path))
         end
         @queued_for_delete = []
       end
 
       def public_url(style = default_style)
         init
-        res = ::Qiniu::RS.get(bucket, path(style))
-        return res["url"] if res
-        nil
+        if @options[:qiniu_host]
+          "#{dynamic_fog_host_for_style(style)}/#{fix_path(path(style))}"
+        else
+          res = ::Qiniu::RS.get(bucket, fix_path(path(style)))
+          if res
+            res["url"]
+          else
+            nil
+          end
+        end
       end
 
       private
@@ -67,6 +74,7 @@ module Paperclip
       end
 
       def upload(file, path)
+        path = fix_path(path)
         remote_upload_url = ::Qiniu::RS.put_auth
         opts = {:url                => remote_upload_url,
                  :file               => file.path,
@@ -75,11 +83,24 @@ module Paperclip
                  :mime_type          => file.content_type,
                  :enable_crc32_check => true}
         ::Qiniu::RS.upload opts
+        log "bucket=#{bucket}, key=#{path}, mime_type=#{file.content_type}"
         log ::Qiniu::RS.get(bucket, path)
       end
 
       def bucket
         @options[:bucket] || raise("bucket is nil")
+      end
+
+      def dynamic_fog_host_for_style(style)
+        if @options[:qiniu_host].respond_to?(:call)
+          @options[:qiniu_host].call(self)
+        else
+          @options[:qiniu_host]
+        end
+      end
+
+      def fix_path(path)
+        path.gsub(/^\//, '')
       end
     end
   end
