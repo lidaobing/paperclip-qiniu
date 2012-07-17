@@ -82,8 +82,6 @@ module Paperclip
                  :mime_type          => file.content_type,
                  :enable_crc32_check => true}
         ::Qiniu::RS.upload opts
-        log "bucket=#{bucket}, key=#{path}, mime_type=#{file.content_type}"
-        log ::Qiniu::RS.get(bucket, path)
       end
 
       def bucket
