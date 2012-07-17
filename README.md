@@ -1,6 +1,9 @@
 # Paperclip::Qiniu
 
-storage paperclip attachments to http://qiniutek.com
+storage [paperclip](https://github.com/thoughtbot/paperclip/) attachments to http://qiniutek.com
+
+example project: https://github.com/lidaobing/paperclip-qiniu-example
+example site: http://stark-cloud-4321.herokuapp.com/
 
 ## Usage
 
