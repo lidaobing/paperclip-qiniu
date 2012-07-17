@@ -8,16 +8,16 @@ example site: http://stark-cloud-4321.herokuapp.com/
 
 ## Usage
 
-0. confirm you are working on a rails app
+* confirm you are working on a rails app
 
-1. add following line to `Gemfile`
+* add following line to `Gemfile`
 
 ```ruby
 gem 'paperclip'
 gem 'paperclip-qiniu'
 ```
 
-2. edit your `config/application.rb`
+* edit your `config/application.rb`
 
 ```ruby
 module PaperclipQiniuExample
@@ -38,7 +38,7 @@ end
 
 for more information on `qiniu_host`, read http://docs.qiniutek.com/v2/sdk/ruby/#publish
 
-3. add a model like this
+* add a model like this
 
 ```ruby
 class Image < ActiveRecord::Base
