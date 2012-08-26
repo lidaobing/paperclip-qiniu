@@ -3,7 +3,7 @@ PATH
   specs:
     paperclip-qiniu (0.0.2)
       paperclip
-      qiniu-rs
+      qiniu-rs (~> 3.0)
 
 GEM
   remote: https://rubygems.org/

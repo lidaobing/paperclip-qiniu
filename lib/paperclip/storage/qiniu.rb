@@ -1,3 +1,5 @@
+require 'paperclip-qiniu/exceptions'
+
 module Paperclip
   module Storage
     module Qiniu
@@ -74,14 +76,16 @@ module Paperclip
       end
 
       def upload(file, path)
-        remote_upload_url = ::Qiniu::RS.put_auth
-        opts = {:url                => remote_upload_url,
+        upload_token = ::Qiniu::RS.generate_upload_token :scope => bucket
+        opts = {:uptoken            => upload_token,
                  :file               => file.path,
                  :key                => path,
                  :bucket             => bucket,
                  :mime_type          => file.content_type,
                  :enable_crc32_check => true}
-        ::Qiniu::RS.upload opts
+        unless ::Qiniu::RS.upload_file(opts)
+          raise Paperclip::Qiniu::UploadFailed
+        end
       end
 
       def bucket
