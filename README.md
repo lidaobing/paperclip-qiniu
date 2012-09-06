@@ -58,6 +58,10 @@ end
 
 ## CHANGELOG
 
+### 0.0.3 (2012-09-06)
+
+* support qiniu api v3.
+
 ### 0.0.2 (2012-07-17)
 
 * support public host.
