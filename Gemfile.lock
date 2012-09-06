@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    paperclip-qiniu (0.0.3)
+    paperclip-qiniu (0.1.0)
       paperclip
       qiniu-rs (~> 3.0)
 
