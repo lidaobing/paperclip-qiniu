@@ -43,10 +43,20 @@ for more information on `qiniu_host`, read http://docs.qiniutek.com/v2/sdk/ruby/
 ```ruby
 class Image < ActiveRecord::Base
   attr_accessible :file
-  has_attached_file :file, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :path => ":class/:attachment/:id/:style/:basename.:extension"
+  has_attached_file :file, :path => ":class/:attachment/:id/:basename.:extension"
   validates :file, :attachment_presence => true
 end
 ```
+
+* show image in your view
+
+```erb
+<%= qiniu_image_tag @image.file.url, :thumbnail => '300x300>', :quality => 80 %>
+or
+<%= image_tag qiniu_image_path(@image.file.url, :thumbnail => '300x300>', :quality => 80) %>
+```
+
+support options: `thumbnail`, `gravity`, `crop`, `quality`, `rotate`, `format`, `auto_orient`. for more information on these options, check the document: http://docs.qiniutek.com/v3/api/foimg/#fo-imageMogr
 
 ## Contributing
 
