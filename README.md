@@ -17,23 +17,18 @@ gem 'paperclip'
 gem 'paperclip-qiniu'
 ```
 
-* edit your `config/application.rb`
+* create `config/initializers/paperclip.rb`
 
 ```ruby
-module PaperclipQiniuExample
-  class Application < Rails::Application
-    # ....
-    config.paperclip_defaults = {:storage => :qiniu,
-      :qiniu_credentials => {
-        :access_key => ENV['QINIU_ACCESS_KEY'] || raise("set env QINIU_ACCESS_KEY"),
-        :secret_key => ENV['QINIU_SECRET_KEY'] || raise("set env QINIU_SECRET_KEY")
-      },
-      :bucket => "paperclip-qiniu-example",
-      :use_timestamp => false,         # required, and must be set to false
-      :qiniu_host => "cdn.example.com" # optional
-    }
-  end
-end
+Paperclip::Attachment.default_options[:storage] = :qiniu
+Paperclip::Attachment.default_options[:qiniu_credentials] = {
+  :access_key => ENV['QINIU_ACCESS_KEY'] || raise("set env QINIU_ACCESS_KEY"),
+  :secret_key => ENV['QINIU_SECRET_KEY'] || raise("set env QINIU_SECRET_KEY")
+}
+Paperclip::Attachment.default_options[:bucket] = 'paperclip-qiniu-example'
+Paperclip::Attachment.default_options[:use_timestamp] = false
+Paperclip::Attachment.default_options[:qiniu_host] =
+  'http://cdn.example.com'
 ```
 
 for more information on `qiniu_host`, read http://docs.qiniutek.com/v2/sdk/ruby/#publish
