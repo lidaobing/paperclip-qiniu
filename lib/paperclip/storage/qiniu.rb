@@ -1,4 +1,5 @@
 require 'paperclip-qiniu/exceptions'
+require 'qiniu/rs'
 
 module Paperclip
   module Storage
