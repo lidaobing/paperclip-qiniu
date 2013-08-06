@@ -26,7 +26,7 @@ module Paperclip
 
       def exists?(style = default_style)
         init
-        !!::Qiniu::RS.stat(bucket, path(style))
+        !!::Qiniu::Rs.stat(bucket, path(style))
       end
 
       def flush_writes
@@ -49,7 +49,7 @@ module Paperclip
       def flush_deletes
         init
         for path in @queued_for_delete do
-          ::Qiniu::RS.delete(bucket, path)
+          ::Qiniu::Rs.delete(bucket, path)
         end
         @queued_for_delete = []
       end
@@ -59,7 +59,7 @@ module Paperclip
         if @options[:qiniu_host]
           "#{dynamic_fog_host_for_style(style)}/#{path(style)}"
         else
-          res = ::Qiniu::RS.get(bucket, path(style))
+          res = ::Qiniu::Rs.get(bucket, path(style))
           if res
             res["url"]
           else
@@ -72,19 +72,19 @@ module Paperclip
 
       def init
         return if @inited
-        ::Qiniu::RS.establish_connection! @options[:qiniu_credentials]
+        ::Qiniu::Rs.establish_connection! @options[:qiniu_credentials]
         inited = true
       end
 
       def upload(file, path)
-        upload_token = ::Qiniu::RS.generate_upload_token :scope => bucket
+        upload_token = ::Qiniu::Rs.generate_upload_token :scope => bucket
         opts = {:uptoken            => upload_token,
                  :file               => file.path,
                  :key                => path,
                  :bucket             => bucket,
                  :mime_type          => file.content_type,
                  :enable_crc32_check => true}
-        unless ::Qiniu::RS.upload_file(opts)
+        unless ::Qiniu::Rs.upload_file(opts)
           raise Paperclip::Qiniu::UploadFailed
         end
       end
