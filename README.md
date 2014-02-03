@@ -4,7 +4,7 @@ storage [paperclip](https://github.com/thoughtbot/paperclip/) attachments to htt
 
 example project: https://github.com/lidaobing/paperclip-qiniu-example
 
-example site: http://stark-cloud-4321.herokuapp.com/
+example site: http://paperclip-qiniu-example.herokuapp.com/
 
 ## Usage
 
