@@ -63,6 +63,10 @@ support options: `thumbnail`, `gravity`, `crop`, `quality`, `rotate`, `format`, 
 
 ## CHANGELOG
 
+### 0.1.1 (2015-01-06)
+
+* upgrade Ruby SDK from `qiniu-rs` to `6.4.1`
+
 ### 0.1.0 (2012-09-06)
 
 * add view helper: qiniu_image_tag, qiniu_image_path
