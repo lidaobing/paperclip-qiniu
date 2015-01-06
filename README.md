@@ -15,6 +15,8 @@ example site: http://stark-cloud-4321.herokuapp.com/
 ```ruby
 gem 'paperclip'
 gem 'paperclip-qiniu'
+# or get the latest version
+# gem 'paperclip-qiniu', :git => "git://github.com/lidaobing/paperclip-qiniu"
 ```
 
 * create `config/initializers/paperclip.rb`
