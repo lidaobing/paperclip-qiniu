@@ -6,6 +6,8 @@ example project: https://github.com/lidaobing/paperclip-qiniu-example
 
 example site: http://paperclip-qiniu-example.herokuapp.com/
 
+if you are using Rails 3, please use version  0.1.0: https://rubygems.org/gems/paperclip-qiniu/versions/0.1.0
+
 ## Usage
 
 * confirm you are working on a rails app
