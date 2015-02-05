@@ -15,6 +15,8 @@ example site: http://paperclip-qiniu-example.herokuapp.com/
 ```ruby
 gem 'paperclip'
 gem 'paperclip-qiniu'
+# or get the latest version
+# gem 'paperclip-qiniu', :git => "git://github.com/lidaobing/paperclip-qiniu"
 ```
 
 * create `config/initializers/paperclip.rb`
@@ -63,6 +65,10 @@ support options: `thumbnail`, `gravity`, `crop`, `quality`, `rotate`, `format`, 
 5. Create new Pull Request
 
 ## CHANGELOG
+
+### 0.1.1 (2015-01-06)
+
+* upgrade Ruby SDK from `qiniu-rs` to `6.4.1`
 
 ### 0.1.0 (2012-09-06)
 
