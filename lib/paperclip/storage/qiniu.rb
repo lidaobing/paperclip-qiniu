@@ -113,7 +113,9 @@ module Paperclip
       end
 
       def bucket
-        @options[:bucket] || raise("bucket is nil")
+        bucket_name = @options[:bucket]
+        bucket_name = bucket_name.call(self) if bucket_name.respond_to?(:call)
+        bucket_name || raise("bucket is nil")
       end
 
       def dynamic_fog_host_for_style(style)
