@@ -72,7 +72,7 @@ module Paperclip
       def init
         return if @inited
         ::Qiniu.establish_connection! @options[:qiniu_credentials]
-        inited = true
+        @inited = true
       end
 
       def upload(file, path)
