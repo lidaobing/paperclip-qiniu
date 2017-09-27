@@ -13,12 +13,13 @@ module Paperclip
 
         base.instance_eval do
           unless @options[:url].to_s.match(/^:fog.*url$/)
+            @options[:qiniu_permissions] = @options[:qiniu_permissions] || 'private'
             @options[:path]  = @options[:path].gsub(/:url/, @options[:url])
-            @options[:url]   = ':qiniu_public_url'
+            @options[:url]   = ':qiniu_file_url'
           end
-          Paperclip.interpolates(:qiniu_public_url) do |attachment, style|
-            attachment.public_url(style)
-          end unless Paperclip::Interpolations.respond_to? :qiniu_public_url
+          Paperclip.interpolates(:qiniu_file_url) do |attachment, style|
+            attachment.file_url(style)
+          end unless Paperclip::Interpolations.respond_to? :qiniu_file_url
         end
 
       end
@@ -51,6 +52,29 @@ module Paperclip
           ::Qiniu.delete(bucket, path)
         end
         @queued_for_delete = []
+      end
+
+      def file_url(style = default_style)
+        if @options[:qiniu_permissions] == 'public'
+          public_url(style)
+        else
+          private_url(style)
+        end
+      end
+
+      def private_url(style = default_style)
+        init
+        if @options[:qiniu_host]
+          primitive_url = "#{dynamic_fog_host_for_style(style)}#{path(style)}"
+          ::Qiniu::Auth.authorize_download_url(primitive_url)
+        else
+          res = ::Qiniu.get(bucket, path(style))
+          if res
+            res["url"]
+          else
+            nil
+          end
+        end
       end
 
       def public_url(style = default_style)
@@ -89,7 +113,9 @@ module Paperclip
       end
 
       def bucket
-        @options[:bucket] || raise("bucket is nil")
+        bucket_name = @options[:bucket]
+        bucket_name = bucket_name.call(self) if bucket_name.respond_to?(:call)
+        bucket_name || raise("bucket is nil")
       end
 
       def dynamic_fog_host_for_style(style)
@@ -101,4 +127,13 @@ module Paperclip
       end
     end
   end
+
+  class UrlGenerator    #small fix: not to escape '?'
+    private
+    def escape_regex
+      /[\(\)\[\]\+]/
+    end
+  end
 end
+
+

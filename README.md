@@ -31,6 +31,7 @@ Paperclip::Attachment.default_options[:qiniu_credentials] = {
 }
 Paperclip::Attachment.default_options[:bucket] = 'paperclip-qiniu-example'
 Paperclip::Attachment.default_options[:use_timestamp] = false
+Paperclip::Attachment.default_options[:qiniu_permissions] = 'public' #default is 'private'
 Paperclip::Attachment.default_options[:qiniu_host] =
   'http://cdn.example.com'
 ```
